@@ -10,7 +10,7 @@ import pandas as pd
 
 
 ## ****RECUPERATION DE LA LISTE DES FICHIERS DICOM****
-## (path = chemin du dossier en local où sont stockés les fichiers DICOM, à adapter)
+## (path_dicom = chemin du dossier en local où sont stockés les fichiers DICOM, à adapter)
 
 path_dicom = r"C:\Users\jeann\OneDrive\Documents\scolaire\ENSAE\2A\S1\python\projet\DICOM" 
 
@@ -24,7 +24,7 @@ files
 
 file = files[0]
 
-filename = pydicom.data.data_manager.get_files(path, file)[0]
+filename = pydicom.data.data_manager.get_files(path_dicom, file)[0]
 ds = pydicom.dcmread(filename)
 
 print(ds) #affiche toutes les métadonnées associés à l'image sous forme de tags
@@ -62,7 +62,7 @@ def from_DICOM_to_DF(dicom_list) :
     # remplissage du dataframe avec les données des images choisies, sans les images pour l'instant
     # (à mettre à jour si on ajoute ou retire des informations du dataframe)
     for file in dicom_list : 
-        filename = pydicom.data.data_manager.get_files(path, file)[0]
+        filename = pydicom.data.data_manager.get_files(path_dicom, file)[0]
         ds = pydicom.dcmread(filename)
         values = [ds.PatientID, ds.PatientName, ds.PatientAge, ds.PatientSex, ds.BodyPartExamined, 0]
         df_new_row = pd.DataFrame(data = [values], columns = df.columns )
@@ -143,7 +143,7 @@ def convert_to_JPG_RGB (Dossier_DICOM, Dossier_JPG_RGB) :
     
 
 
-path_dicom = path
+
 path_jpg = r"C:\Users\jeann\OneDrive\Documents\scolaire\ENSAE\2A\S1\python\projet\JPG"
 path_jpg_rgb = r"C:\Users\jeann\OneDrive\Documents\scolaire\ENSAE\2A\S1\python\projet\JPG_RGB"
 
