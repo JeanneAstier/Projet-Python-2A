@@ -33,7 +33,7 @@ df_train.head()
 df_train.shape
 
 
-# On remarque que cette base est volumineuse ( 33 126 lignes représentant les 33 126 patients). Par manque de puissance de calculs, nous ne sommes pas en mesure de traiter une telle base de données. C'est pourquoi nous souhaitons l'échantillonner avant de créer un algorithme de machin learning permettant d'identifier les mélanomes bénins et malins.
+# On remarque que cette base est volumineuse ( 33 126 lignes représentant les 33 126 images de mélanomes (le nombre de patient peut être moindre car un patient peut avoir plusieurs ménalomes). Par manque de puissance de calculs, nous ne sommes pas en mesure de traiter une telle base de données. C'est pourquoi nous souhaitons l'échantillonner avant de créer un algorithme de machin learning permettant d'identifier les mélanomes bénins et malins.
 # Comment selectionner notre échantillon ? 
 
 # In[51]:
@@ -78,7 +78,7 @@ df_train.groupby('patient_sex')['patient_id'].nunique()
 
 
 df_train["patient_sex"].value_counts().plot(kind='pie' , autopct='%1.1f%%')
-plt.xlabel(' Paritée Hommes/Femmes', fontsize=15)
+plt.xlabel(' Parité Hommes/Femmes', fontsize=15)
 
 
 # La parité Homme/Femme est respectée. 
@@ -149,7 +149,7 @@ plt.show()
 
 # D'après cet échantillon les hommes sont plus touchés par les mélanomes malins que les femmes. 
 # 1,37% des femmes de l'échantillon sont porteuses d'un mélanome bénins contre 2,13% des hommes.
-# Les articles scientifiques de confirment pas cette hypothèse. 
+# Les articles scientifiques ne confirment pas cette hypothèse. 
 # 
 # 
 # FAIRE UN TEST ?? 
