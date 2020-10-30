@@ -24,8 +24,7 @@ class Dataframe :
         self.path_Training_GroundTruth ="C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/ISIC_2020_Training_GroundTruth.csv"
         self.path_jpg = "C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/test jpg" # Chemin vers les images.jpg
         self.path_jpg_RGB= "C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/test jpg" # Chemin vers les images.jpg aux couleurs RGB
-        self.columns =["patient_id", "patient_name", "patient_age", "patient_sex", "body_part", "image"] 
-               
+        self.columns =["image_id", "patient_age", "patient_sex", "body_part"] # informations qu'on va récupérer dans les données DICOM
         
     def from_DICOM_to_DF(self):
         '''
@@ -42,19 +41,19 @@ class Dataframe :
             w = Dataframe()
             w.from_DICOM_to_DF()
         '''
-        global df
+       global df
         df = pd.DataFrame(columns=self.columns)
         for file in os.listdir(self.path_dicom) : 
             filename = pydicom.data.data_manager.get_files(self.path_dicom, file)[0]
             ds = pydicom.dcmread(filename)
-            values = [ds.PatientID[1:-1], ds.PatientName, int(ds.PatientAge[:3]), ds.PatientSex, ds.BodyPartExamined, 0] # on n'insère pas encore l'image pour l'instant
+            values = [ds.PatientID[1:-1], int(ds.PatientAge[:3]), ds.PatientSex, ds.BodyPartExamined] 
             df_new_row = pd.DataFrame(data = [values], columns = self.columns)
             df = pd.concat([df, df_new_row], ignore_index = True)
-        df2 = pd.read_csv(self.path_Training_GroundTruth) # on va chercher l'information target (bénin ou malin) dans un document à part (elle n'est pas comprise dans les metadonnées DICOM)
-        print(df2['patient_id'])
-        df = pd.merge(df,df2[['image_name','target']], left_on='patient_id', right_on='image_name')
+        df2 = pd.read_csv(self.path_Training_GroundTruth) 
+        # on va chercher l'information target (bénin ou malin) dans un document à part (elle n'est pas comprise dans les metadonnées DICOM)
+        # ainsi que le patient_id
+        df = pd.merge(df,df2[['image_name','target', "patient_id"]], left_on='image_id', right_on='image_name')
         return df
-    
 
     def convert_DICOM_to_JPG (self) :
         '''
