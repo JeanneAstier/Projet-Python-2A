@@ -165,7 +165,8 @@ plt.show()
 # In[236]:
 
 
-sns.barplot(df_train['body_part'],df_train['target'], palette='Blues_d')
+sns.catplot(y = 'body_part', x = 'target', data = df_train, kind = "bar", height = 5, aspect = 4, palette='Blues_d')
+## je propose ce graphique qui est en horizontal (j'arrive pas à le tester chez moi j'ai pas encore les données, mais je crois que ça marche à peu près)
 
 
 # Le taux de mélanomes malins est plus élevé sur les parties du corps : 
