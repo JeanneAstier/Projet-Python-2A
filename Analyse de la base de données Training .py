@@ -150,9 +150,17 @@ plt.show()
 # D'après cet échantillon les hommes sont plus touchés par les mélanomes malins que les femmes. 
 # 1,37% des femmes de l'échantillon sont porteuses d'un mélanome bénins contre 2,13% des hommes.
 # Les articles scientifiques ne confirment pas cette hypothèse. 
-# 
-# 
-# FAIRE UN TEST ?? 
+
+# In[63]:
+
+
+print(stats.ttest_ind(df_train["target"][df_train.patient_sex == 'F'],df_train["target"][df_train.patient_sex == 'M']))
+
+
+# Les populations féminines et masculines sont significativement différentes en ce qui concerne les mélanomes (p-value < 0,001
+
+# ### c) Melanomes et partie du corps
+
 
 # ### c) Melanomes et partie du corps
 
@@ -164,8 +172,7 @@ plt.show()
 
 # In[236]:
 
-
-sns.barplot(df_train['body_part'],df_train['target'], palette='Blues_d')
+sns.barplot(df_train['target'], df_train['body_part'],palette='Blues_d', orient='h',  order=["HEAD/NECK", "ORAL/GENITAL","UPPER EXTREMITY","SKIN", "TORSO", "LOWER EXTREMITY", "PALMS/SOLES" ])
 
 
 # Le taux de mélanomes malins est plus élevé sur les parties du corps : 
@@ -178,9 +185,7 @@ sns.barplot(df_train['body_part'],df_train['target'], palette='Blues_d')
 # Dans ce sens, cela est étonnant d'identifier les zones orales et génitales comme zones à risque. Cependant, dans notre échantillon, la catégorie "Oral/Genital" est la moins représentée des parties du corps; il n'y a que 124 images. Ce qui est très faible par rapport à notre base totale. L'échantillon est probablement peu représentatif de la population total pour cette partie du corps.
 # 
 # 
-# J'AIME PAS TROP CE GRAPHIQUE CAR ON VOIT RIEN SUR L'AXE DES ABSCISSES. Ce serait mieux en horizontal mais j'ai pas réussi 
 # 
-# FAIRE UN TEST ? 
 
 # ## 3 - Regression linéaire logistique
 
