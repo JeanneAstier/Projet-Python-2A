@@ -184,10 +184,50 @@ sns.barplot(df_train['body_part'],df_train['target'], palette='Blues_d')
 
 # ## 3 - Regression linéaire logistique
 
-# Nous voulons ici expliquer la variable 'target' en fonction des variables 'patient_age', 'patient_sex', 'body_part'
+# La régression logistique est une technique prédictive. Elle vise à construire un modèle permettant de prédire / expliquer les valeurs prises par une variable cible qualitative (le plus souvent binaire, on parle alors de régression logistique binaire) à partir d’un ensemble de variables explicatives quantitatives ou qualitatives (un codage est nécessaire dans ce cas).
+# Nous voulons ici expliquer la variable 'target' (binaire) en fonction des variables 'patient_age'(quantitative), 'patient_sex'(qualitative), 'body_part'(qualitative). 
 
-# In[ ]:
+# In[24]:
 
 
+training=pd.get_dummies(df_train, columns=["patient_sex","body_part"])
+training.drop('patient_sex_F', axis=1, inplace=True)
+final_train = training
+final_train.head()
 
 
+# In[37]:
+
+
+import statsmodels.api as sm
+from sklearn import linear_model
+
+
+# In[41]:
+
+
+X = final_train[["patient_age", "patient_sex_M", "body_part_HEAD/NECK", "body_part_LOWER EXTREMITY", 
+              "body_part_ORAL/GENITAL","body_part_PALMS/SOLES","body_part_SKIN", "body_part_TORSO", "body_part_UPPER EXTREMITY"]]
+X = sm.add_constant(X) # une autre façons d'ajouter une constante
+y = final_train["target"]
+
+model = sm.OLS(y, X)
+results = model.fit()
+print(results.summary())
+
+
+# In[43]:
+
+
+Selected_features = ["patient_age", "patient_sex_M", "body_part_HEAD/NECK", "body_part_LOWER EXTREMITY", 
+              "body_part_ORAL/GENITAL","body_part_PALMS/SOLES","body_part_SKIN", "body_part_TORSO", "body_part_UPPER EXTREMITY"]
+X = final_train[Selected_features]
+
+plt.subplots(figsize=(10, 7))
+sns.heatmap(X.corr(), annot=True, cmap="RdYlGn")
+plt.show()
+
+
+# Notre modéle n'est pas convainquant, les coefficients sont très faibles, les variables age, parties du corps et sexe expliquent à hauteur de 0,9% les mélanomes malin (R²=0,009).
+# Il n'est pas possible d'expliquer convenablement les mélanomes malins à partir de ces variables explicatives.
+# Il est donc primordial d'analyser les images de mélanomes afin de fournir un modèle prédictif acceptable. 
