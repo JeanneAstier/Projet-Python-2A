@@ -157,9 +157,8 @@ plt.show()
 print(stats.ttest_ind(df_train["target"][df_train.patient_sex == 'F'],df_train["target"][df_train.patient_sex == 'M']))
 
 
-# Les populations féminines et masculines sont significativement différentes en ce qui concerne les mélanomes (p-value < 0,001
+# Les populations féminines et masculines sont significativement différentes en ce qui concerne les mélanomes (p-value < 0,001)
 
-# ### c) Melanomes et partie du corps
 
 
 # ### c) Melanomes et partie du corps
@@ -183,9 +182,15 @@ sns.barplot(df_train['target'], df_train['body_part'],palette='Blues_d', orient=
 # Selon les articles scientifiques, les zones les plus exposées aux mélanomes malins sont les parties les plus exposées au soleil.
 # Il est donc raisonnable d'identifier la tête, le cou et les membres supérieurs dans les parties du corps les plus touchées par les mélanomes malins. 
 # Dans ce sens, cela est étonnant d'identifier les zones orales et génitales comme zones à risque. Cependant, dans notre échantillon, la catégorie "Oral/Genital" est la moins représentée des parties du corps; il n'y a que 124 images. Ce qui est très faible par rapport à notre base totale. L'échantillon est probablement peu représentatif de la population total pour cette partie du corps.
-# 
-# 
-# 
+
+# In[68]:
+
+
+print(stats.kruskal(df_train["target"][df_train.body_part == 'HEAD/NECK'],df_train["target"][df_train.body_part == 'ORAL/GENITAL'],df_train["target"][df_train.body_part == 'SKIN'],df_train["target"][df_train.body_part == "UPPER EXTREMITY"],df_train["target"][df_train.body_part == "TORSO"],df_train["target"][df_train.body_part == "PALMS/SOLES"],df_train["target"][df_train.body_part == "LOWER EXTREMITY"]))
+
+
+# D'après le test de Kruskal Wallis les populations de mélanomes sont différentes en fonction des parties du corps. 
+
 
 # ## 3 - Regression linéaire logistique
 
