@@ -154,10 +154,12 @@ plt.show()
 # In[63]:
 
 
+from scipy import stats
+
 print(stats.ttest_ind(df_train["target"][df_train.patient_sex == 'F'],df_train["target"][df_train.patient_sex == 'M']))
 
 
-# Les populations féminines et masculines sont significativement différentes en ce qui concerne les mélanomes (p-value < 0,001)
+# D'après les résultats du T-test, les populations féminines et masculines sont significativement différentes en ce qui concerne les mélanomes (p-value < 0,001)
 
 
 
