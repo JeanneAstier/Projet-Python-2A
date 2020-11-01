@@ -15,6 +15,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import scipy.stats as stats
 
 
 # Pour cela nous avons besoin de la base de données "Training_DataFrame" créée dans le fichier "" a partir des images au format DICOM récupérées sur le site : https://challenge2020.isic-archive.com/ .
@@ -153,8 +154,6 @@ plt.show()
 
 # In[63]:
 
-
-from scipy import stats
 
 print(stats.ttest_ind(df_train["target"][df_train.patient_sex == 'F'],df_train["target"][df_train.patient_sex == 'M']))
 
