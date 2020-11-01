@@ -104,7 +104,7 @@ plt.xticks(rotation= 45)
 plt.tight_layout()
 
 
-# ### c) Melanomes bénins et malins
+# ### d) Melanomes bénins et malins
 
 # In[64]:
 
@@ -112,6 +112,29 @@ plt.tight_layout()
 plt.pie([sum(df_train['target']==1),sum(df_train['target']==0)], labels = ['Malins','Benins'],colors = ['lightcoral','lightskyblue'],autopct='%1.1f%%')
 plt.title("Taux de melanomes benins et malins dans l'échantillon")
 plt.show()
+
+
+# ### e) Patients
+
+print(df_train["image_id"].nunique())
+print(df_train["patient_id"].nunique())
+
+# il y a bien moins de patients que d'images (33126 images pour 2056 patients)
+# plusieurs images peuvent donc appartenir à un même patient (environ 16 images par patient en moyenne)
+
+df1 = df.groupby("patient_id").sum()["target"]
+df2 = df.groupby("patient_id").count()["image_name"]
+
+pd.concat([df1, df2], axis=1, sort=False).sort_values(by = "image_name", ascending = False).head(150)
+
+pd.concat([df1, df2], axis=1, sort=False).sort_values(by = "target", ascending = False).head(150)
+
+pd.concat([df1, df2], axis=1, sort=False).sort_values(by = "target", ascending = False).head(20).plot(kind = "bar", figsize = (25,5))
+plt.title("nombre de mélanomes bénins et d'images pour les 20 patients ayant le plus de mélanomes bénins", fontsize = 25)
+
+# il y a jusqu'à 115 images par patient, et jusqu'à 8 mélanomes bénins par patient au sein de la base de données
+# mais les patients qui ont le plus d'images ne sont pas nécessairement ceux qui ont le plus de mélanomes bénins
+
 
 
 # ## 2 - Analyses bivariées
