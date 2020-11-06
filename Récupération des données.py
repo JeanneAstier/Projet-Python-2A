@@ -41,7 +41,7 @@ class Dataframe :
             w = Dataframe()
             w.from_DICOM_to_DF()
         '''
-       global df
+        global df
         df = pd.DataFrame(columns=self.columns)
         for file in os.listdir(self.path_dicom) : 
             filename = pydicom.data.data_manager.get_files(self.path_dicom, file)[0]
@@ -110,9 +110,8 @@ class Dataframe :
             cv2.imwrite(os.path.join(self.path_jpg_RGB, image), cv2.cvtColor(convert, cv2.COLOR_RGB2BGR))
         print ('Le dossier est pret !')
 
-df.to_csv('C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/Training_DataFrame.csv', index=False)
 
-def analyse_base():
-    df['patient_age'].hist()
-    print("Analyse de la variable 'Age' de l'échantillon",'\n','Moyenne :', df['patient_age'].mean(), '\n', 'Ecart type:',  df['patient_age'].std())
+#w = Dataframe()
+#w.from_DICOM_to_DF()
+#df.to_csv('C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/Training_DataFrame.csv', index=False)
 
