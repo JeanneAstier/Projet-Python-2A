@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import shutil, os
+
 
 
 # # 1. Construction d'un échantillon de la base train
@@ -205,3 +207,31 @@ plt.show()
 # La distribution des mélanomes malins sur les parties du corps semble perturbée par l'échantillonnage : les mélanomes sur les parties orales / génitales sont par exemple beaucoup plus malins dans l'échantillon que dans la base complète. 
 # 
 # Nous ne voyons pas d'explication particulière à ce phénomène, si ce n'est pas sélection au hasard qui pertubre la distribution. 
+
+# ## 3- Création de deux dossiers distincts : Images melanomes benins et Images melanomes malins
+
+def dossiers_images (path_image_dicom, path_malin, path_benin ) :
+    """
+    Cette fonction permet de transferer les images selectionnées dans l'échantillon vers un dossier 
+    Images melanomes benins ou Images melanomes malins.
+    /!\ Attention : Il faut préalablement créer les dossier "Images melanomes benins" et "Images melanomes malin" aux emplacements souhaités
+    
+    Elle prend en parametre :
+        - path_image_dicom: chemin vers la base de donnée compléte des images au format dicom
+        - lien vers le dossier Images melanomes malins 
+        - lien vers le dossier Images melanomes benins
+    
+    Exemple : 
+        path_image_dicom = 'C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/train'
+        path_malin ='C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/Images echantillon training/Images melanomes malins'
+        path_benin ='C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/Images echantillon training/Images melanomes benins'
+        dossiers_images (path_image_dicom, path_malin, path_benin ) 
+    """
+    for file in sample_malin.image_id :
+        shutil.copy(path_image_dicom + '/' + file +'.dcm', path_malin + '/' + file +'.dcm')
+    for file in sample_benin.image_id:
+        shutil.copy(path_image_dicom + '/' + file +'.dcm', path_benin + '/' + file +'.dcm')
+    return ('Les dossiers sont prets !')
+
+dossiers_images(path_image_dicom, path_malin, path_benin )
+
