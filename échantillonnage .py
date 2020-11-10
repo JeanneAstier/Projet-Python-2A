@@ -69,6 +69,9 @@ sample_train = sample_malin.append(sample_benin)
 
 sample_train
 
+#Enregistrement de notre dataframe au format csv :
+sample_train.to_csv('C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/Images echantillon training/Echantillon_DataFrame.csv', index=False)
+
 
 # # 2. Analyse de l'échantillon
 #
