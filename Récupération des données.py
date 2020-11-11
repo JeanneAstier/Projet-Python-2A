@@ -5,6 +5,7 @@ Ce module permet de traiter les donnees DICOM :
     - analyser la table
 @author: louis
 """
+#TEST 
 
 # Pour cela nous aurons besoin des packages suivant : 
 import pydicom as dicom # module pour utiliser les donnees au format DICOM
@@ -111,7 +112,7 @@ class Dataframe :
         print ('Le dossier est pret !')
 
 
-#w = Dataframe()
-#w.from_DICOM_to_DF()
-#df.to_csv('C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/Training_DataFrame.csv', index=False)
+w = Dataframe()
+w.from_DICOM_to_DF()
+df.to_csv('C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/Training_DataFrame.csv', index=False)
 
