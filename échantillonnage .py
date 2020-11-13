@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
+"""
+"""
 
 # téléchargement préalable des modules requis
 
