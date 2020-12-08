@@ -37,15 +37,20 @@ def Premiere_fonction ():
         print ('Le dossier Projet_Melanomes a été créé ! ', '\n', 'Nous allons maintenant télécharger le fichier de diagnostics ','\n')
         urllib.request.urlretrieve("https://isic-challenge-data.s3.amazonaws.com/2020/ISIC_2020_Training_GroundTruth.csv", Path_Projet_Melanomes+'/Diagnostic.csv')
         print ('Le fichier Diagnostic a été créé ! ' ,'\n', 'Nous allons également créer au préalable : ','\n','- un dossier "Dicom_Sample_Train" qui contiendra les images (au format DICOM) de notre futur échantillon training ', '\n','- un dossier "Dicom_Sample_Test" qui contiendra les images (au format DICOM) de notre futur échantillon de test '
-               ,'\n','- un dossier "JPG_Sample_Train" qui contiendra les images (au format jpg) de notre futur échantillon training ', '\n','- un dossier "JPG_Sample_Test" qui contiendra les images (au format jpg) de notre futur échantillon de test ')
+               ,'\n','- un dossier "JPG_Sample_Train" qui contiendra les images (au format jpg) de notre futur échantillon training ', '\n','- un dossier "JPG_Sample_Test" qui contiendra les images (au format jpg) de notre futur échantillon de test ',
+               '\n','- un dossier "JPG_Sample_Train_Resize" qui contiendra les images (au format jpg) de notre futur échantillon training, redimensionnées ', '\n','- un dossier "JPG_Sample_Test_Resize" qui contiendra les images (au format jpg) de notre futur échantillon de test redimensionnées ')
         Path_Dicom_Sample_Train = Path_Projet_Melanomes+'/Dicom_Sample_Train'
         Path_Dicom_Sample_Test = Path_Projet_Melanomes+'/Dicom_Sample_Test'
         Path_JPG_Sample_Train = Path_Projet_Melanomes+'/JPG_Sample_Train'
         Path_JPG_Sample_Test = Path_Projet_Melanomes+'/JPG_Sample_Test'
+        Path_JPG_Sample_Train_Resize = Path_Projet_Melanomes+'/JPG_Sample_Train_Resize'
+        Path_JPG_Sample_Test_Resize = Path_Projet_Melanomes+'/JPG_Sample_Test_Resize'
         os.mkdir(Path_Dicom_Sample_Train)
         os.mkdir(Path_Dicom_Sample_Test)
         os.mkdir(Path_JPG_Sample_Train)
         os.mkdir(Path_JPG_Sample_Test)
+        os.mkdir(Path_JPG_Sample_Train_Resize)
+        os.mkdir(Path_JPG_Sample_Test_Resize)
         # Telechargement du dossier ISIC_2020_Training_Dicom.zip 
         Q2= input("Voulez vous télécharger l'intégralité de la base sur laquelle repose ce projet (4h de téléchagement) ? (1 pour 'Oui') Sinon, ( 0 pour 'Non') il vous sera proposé de télécharger un échantillon de cette base ")
         if Q2 == '1' :
@@ -82,8 +87,9 @@ class Dataframe :
         self.path_base_complete = "C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/Images echantillon training/Images melanomes malins" # Chemin vers les images.dcm
         self.path_Diagnostic ="C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/Images echantillon training/Echantillon_DataFrame.csv"
         self.path_jpg = "C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/test jpg" # Chemin vers les images.jpg
-        self.path_jpg_RGB= "C:/Users/louis/OneDrive/Documents/ENSAE/2A/Info/Projet melanome/Images echantillon training/Toutes les images" # Chemin vers les images.jpg aux couleurs RGB
+        self.path_jpg_RGB= "C:/Users/louis/OneDrive/Bureau/TEST/Projet_Melanomes/JPG_Sample_Train" # Chemin vers les images.jpg aux couleurs RGB
         self.columns =["image_id", "patient_age", "patient_sex", "body_part"] # informations qu'on va récupérer dans les données DICOM
+        self.path_jpg_Resize = "C:/Users/louis/OneDrive/Bureau/TEST/Projet_Melanomes/JPG_Sample_Train_Resize"
         
     def from_DICOM_to_DF(self):
         '''
@@ -157,6 +163,19 @@ class Dataframe :
             image = image.replace('.dcm', '.jpg') 
             cv2.imwrite(os.path.join(self.path_jpg_RGB, image), cv2.cvtColor(convert, cv2.COLOR_RGB2BGR))
         print ('Le dossier est pret !')
+        
+        
+    def redimensionner (self, size) : 
+        """
+        Cette fonction permet de redimensionner les images du dossier path_jpg
+        Cette fonction prend en paramètre : 
+            - le parametre 'self' permettant de se référer aux caractéristiques présentes dans la partie initialisation
+            - le parametre 'size' : un tuple indicant les dimensions souhaitées pour l'image
+        """
+        for file in os.listdir(self.path_jpg_RGB) :
+            im = cv2.imread(self.path_jpg_RGB + '/'+ file)
+            im=cv2.resize(im,size)
+            cv2.imwrite(self.path_jpg_Resize+ '/'+ file, im)
 
 #w = Dataframe()
 #w.convert_to_JPG_RGB()
