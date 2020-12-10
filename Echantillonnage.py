@@ -31,7 +31,6 @@ import shutil
 
 
 
-
 np.random.seed(10)
 
 def simple_sampling(df, size, malignancy_rate) : 
@@ -53,6 +52,8 @@ def simple_sampling(df, size, malignancy_rate) :
             => renvoie un dataframe de 100 lignes sélectionnées aléatoirement dans df dont 20% représentent des 
             mélanomes (malins), 80% des grains de beauté bénins.  
     '''
+    
+    np.random.seed(10)
     
     # échantillonnage des images malignes 
     n_malin = int(malignancy_rate * size)
