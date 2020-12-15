@@ -179,6 +179,7 @@ class Dataframe :
             im = cv2.imread(self.path_jpg_RGB + '/'+ file)
             im=cv2.resize(im,size)
             cv2.imwrite(self.path_jpg_Resize+ '/'+ file, im)
+        print ('Le dossier est pret !')
 
 #w = Dataframe()
 #w.convert_to_JPG_RGB()
