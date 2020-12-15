@@ -25,7 +25,7 @@ import zipfile # Permet de dezipper un fichier
 def Premiere_fonction ():
     global Path_Projet_Melanomes
     print(" Répondez par 1 pour 'Oui' et 0 pour 'Non' à ce questionnaire " )
-    Q1= input('Avez vous déja lancé ce programme ? (le dossier "Projet_Melanomes" contenant le fichier Base_complete (ISIC_2020_Training_Dicom dezippé) et le fichier Diagnostic est-il deja créé ?) [1 :"oui", 0: "non"] ')
+    Q1= input('Avez vous déja lancé ce programme ? (le dossier "Projet_Melanomes" (contenant le fichier Base_complete (ISIC_2020_Training_Dicom dezippé), les dossiers Dicom_Sample_Test, Dicom_sample_Train, le fichier Diagnostic...) est-il deja créé ?) [1 :"oui", 0: "non"] ')
     if Q1 == '1' :
         Path_Projet_Melanomes = input( "Insérez le chemin du document 'Projet_Melanomes' (exemple : C:/Users/louis/OneDrive/Bureau/Projet_Melanomes) : ")
     elif Q1 == '0' :
@@ -66,7 +66,9 @@ def Premiere_fonction ():
             print("Les commandes de ce projet ne pourront pas toutes aboutir.","\n", "\n", 
                     "Cependant, nous mettons un échantillon de cette base (et d'autres fichiers effectués à partir de la base compléte) sur le drive suivant : ","\n",
                     "https://drive.google.com/drive/folders/1ByHZayDJD6OiB7g9D3hHsUMFWFZmeBy3?usp=sharing","\n","\n", 
-                    "Le fichier 'Base_complete' ne representera qu'un échantillon de la base complete","\n", 
+                    "Le dossier 'Base_complete' ne representera qu'un échantillon de la base complete, (15 fichiers dicom au lieux de plus de 33 000)","\n", 
+                    "Il est dans ce cas primordial de ne pas effectuer les cellules indiquées comme 'Non conseillé en cas de téléchargement via le drive' ","\n",
+                    "\n", " et de respecter les téléchargements du drive à effectuer afin de mener à bien ce projet. ","\n",
                     " Il est important de télécharger ces fichiers dans le dossier 'Projet_Melanomes' créé précedemment, et de ne pas les modifier.")
     else :
         return (" La réponse à la question doit être 1 pour 'Oui' et 0 pour 'Non'" )
@@ -116,6 +118,7 @@ class Dataframe :
         # on va chercher l'information target (bénin ou malin) dans un document à part (elle n'est pas comprise dans les metadonnées DICOM)
         # ainsi que le patient_id
         df = pd.merge(df,df2[['image_name','target', "patient_id"]], left_on='image_id', right_on='image_name')
+        print('Le fichier est pret !')
         return df
 
     def convert_DICOM_to_JPG (self) :
